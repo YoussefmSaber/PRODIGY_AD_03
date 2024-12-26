@@ -68,6 +68,8 @@ dependencies {
     implementation(libs.koin.androidx.compose)
     implementation(libs.koin.android)
     implementation(libs.koin.test)
+    // constraint layout
+    implementation(libs.androidx.constraintlayout.compose)
     implementation(libs.koin.annotations)
     ksp(libs.koin.ksp)
 }

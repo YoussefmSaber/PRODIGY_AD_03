@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -12,8 +13,8 @@ class StopwatchViewModel : ViewModel() {
     var timeInMillis = mutableLongStateOf(0L)
     var isRunning = mutableStateOf(false)
     var lapTimes = mutableStateOf(listOf<Long>())
-    var lapStartTime = mutableLongStateOf(0L)
-    var isLapRunning = mutableStateOf(false)
+    private var lapStartTime = mutableLongStateOf(0L)
+    private var isLapRunning = mutableStateOf(false)
 
     init {
         resetStopwatch()
@@ -21,7 +22,7 @@ class StopwatchViewModel : ViewModel() {
 
     fun startStopwatch() {
         isRunning.value = true
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             while (isRunning.value) {
                 delay(10L)
                 timeInMillis.value += 10L
